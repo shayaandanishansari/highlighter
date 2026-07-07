@@ -5,9 +5,9 @@ export function WhereThisLives() {
     <section>
       <p className="eyebrow">Where this lives</p>
       <p>
-        For now, Highlighter is on Instagram and LinkedIn, and it's Pakistan only, on purpose, so
-        it stays clear instead of confusing. A website is <Mark color="blue">coming</Mark>. Same
-        idea. More room to build in.
+        For now, Highlighter is on <Mark color="pink">Instagram and LinkedIn</Mark>, and it's
+        focused on <Mark color="yellow">Pakistan initially</Mark>. A platform website is{' '}
+        <Mark color="blue">coming</Mark>. Same idea. More room to build in.
       </p>
     </section>
   )

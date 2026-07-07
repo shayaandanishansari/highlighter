@@ -1,6 +1,5 @@
 import { Hero } from './components/Hero'
 import { IdeaSection } from './components/IdeaSection'
-import { HowItWorks } from './components/HowItWorks'
 import { Showcase } from './components/Showcase'
 import { WhereThisLives } from './components/WhereThisLives'
 import { Founder } from './components/Founder'
@@ -13,9 +12,8 @@ function App() {
   return (
     <div className="page">
       <Hero />
-      <IdeaSection />
-      <HowItWorks />
       <Showcase />
+      <IdeaSection />
       <WhereThisLives />
       <Founder />
       <Footer />

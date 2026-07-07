@@ -124,11 +124,16 @@ a:focus-visible, button:focus-visible{
   font-weight:500;
   letter-spacing:0;
 }
+.badge-number{
+  font-size:1.36em;
+  line-height:1;
+}
 .badge .growing{
   display:inline-flex;
   align-items:center;
   gap:.35rem;
   margin-top:.1rem;
+  font-size:1.3em;
   color:#000;
 }
 .badge .dot{
@@ -218,6 +223,9 @@ h2{
   margin:0 0 var(--line);
 }
 
+.idea-intro h2{ margin-bottom:0; }
+.idea-intro h2:last-child{ margin-bottom:var(--line); }
+
 p{ margin:0 0 1.1rem; }
 p:last-child{ margin-bottom:0; }
 
@@ -226,39 +234,6 @@ section > p{ line-height:var(--line); margin:0 0 var(--line); }
 section > p:last-child{ margin-bottom:0; }
 
 .lede{ font-size:1.1rem; }
-
-/* ---- how it works ---- */
-.flow{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:1.1rem;
-}
-@media (max-width:640px){
-  .flow{ grid-template-columns:1fr; }
-}
-.flow-card{
-  background:var(--card);
-  border:1px solid var(--card-border);
-  border-radius:4px;
-  padding:1.3rem 1.2rem;
-}
-.flow-tag{
-  font-family:'IBM Plex Mono', monospace;
-  font-size:.68rem;
-  font-weight:600;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--ink-soft);
-  display:block;
-  margin-bottom:.6rem;
-}
-.flow-card h3{
-  font-family:'Work Sans', sans-serif;
-  font-size:1.05rem;
-  font-weight:700;
-  margin:0 0 .4rem;
-}
-.flow-card p{ font-size:.94rem; color:var(--ink-soft); margin:0; }
 
 /* ---- sticky note ---- */
 .note{
@@ -270,38 +245,13 @@ section > p:last-child{ margin-bottom:0; }
   transform:rotate(-.6deg);
   box-shadow:0 10px 24px -18px rgba(0,0,0,.35);
 }
-.note::before{
-  content:"";
-  position:absolute;
-  top:-.7rem; left:50%;
-  width:4.2rem; height:1.4rem;
-  background:var(--blue-soft);
-  transform:translateX(-50%) rotate(-2deg);
-  border-radius:1px;
-}
 .note h3{
   font-family:'Archivo Black', sans-serif;
   font-weight:400;
   font-size:1.3rem;
   margin:0 0 .7rem;
 }
-.note .stat{
-  font-family:'IBM Plex Mono', monospace;
-  font-size:.82rem;
-  color:var(--ink-soft);
-  margin:1rem 0 1.2rem;
-}
 .note .cta-row{ margin-top:1.2rem; }
-
-/* ---- founder ---- */
-.founder-note{
-  font-family:'Caveat', cursive;
-  font-size:1.4rem;
-  color:var(--ink-soft);
-  display:inline-block;
-  transform:rotate(-1.5deg);
-  margin-top:.4rem;
-}
 
 /* ---- footer ---- */
 footer{
@@ -311,5 +261,34 @@ footer{
   color:var(--ink-soft);
 }
 footer .cta-row{ margin-bottom:1.4rem; }
-footer .fine{ font-size:.82rem; max-width:48ch; }
-footer .fine a{ text-decoration:underline; }
+.email-line{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+}
+.email-line .email-text{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:.85rem;
+  color:var(--ink);
+}
+.copy-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:1.7rem;
+  height:1.7rem;
+  padding:0;
+  border:1px solid var(--card-border);
+  border-radius:4px;
+  background:var(--card);
+  color:var(--ink-soft);
+  cursor:pointer;
+  transition:color .15s ease, border-color .15s ease;
+}
+.copy-btn:hover{ color:var(--ink); border-color:var(--ink-soft); }
+.copy-btn svg{ width:1rem; height:1rem; }
+.copied-badge{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:.78rem;
+  color:var(--ink-soft);
+}

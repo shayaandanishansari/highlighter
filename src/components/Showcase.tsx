@@ -11,7 +11,13 @@ export function Showcase() {
           <Mark color="yellow">clean, shareable write-up</Mark>: what you built, why you built it,
           who it's for, and how the journey went.
         </p>
-        <p className="stat">Open to all universities. Graduated, current, or turned it into a startup, all welcome.</p>
+        <p>
+          Open to <Mark color="pink">all universities</Mark>. Graduated, current, or{' '}
+          <Mark color="green">turned it into a startup</Mark>, all welcome.
+        </p>
+        <p>
+          <strong>We need you!!!</strong>
+        </p>
         <div className="cta-row">
           <a className="btn" href="mailto:editor@highlighter.world">
             Submit your FYP
