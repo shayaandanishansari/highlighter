@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { InstagramIcon } from './icons/InstagramIcon'
 import { LinkedInIcon } from './icons/LinkedInIcon'
