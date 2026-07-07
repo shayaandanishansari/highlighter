@@ -1,0 +1,353 @@
+<title>Highlighter — Project Understanding</title>
+<style>
+  :root{
+    --paper:#faf8f2;
+    --surface:#efe9da;
+    --surface-2:#e5ded0;
+    --ink:#19170f;
+    --muted:#726a58;
+    --line:#ddd4bf;
+    --accent:#e07a1f;
+    --accent-deep:#a85610;
+    --accent-ink:#3a2000;
+    --accent-wash:rgba(224,122,31,0.16);
+    --red:#a83a2f;
+    --red-wash:rgba(168,58,47,0.12);
+    --green:#3f6b3a;
+  }
+  :root[data-theme="dark"]{
+    --paper:#15130d;
+    --surface:#1f1c14;
+    --surface-2:#28241a;
+    --ink:#f1ead9;
+    --muted:#a89a7d;
+    --line:#332e21;
+    --accent:#f0973f;
+    --accent-deep:#f7b877;
+    --accent-ink:#2c1600;
+    --accent-wash:rgba(240,151,63,0.16);
+    --red:#e08074;
+    --red-wash:rgba(224,128,116,0.14);
+    --green:#8fbf85;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#15130d;
+      --surface:#1f1c14;
+      --surface-2:#28241a;
+      --ink:#f1ead9;
+      --muted:#a89a7d;
+      --line:#332e21;
+      --accent:#f0973f;
+      --accent-deep:#f7b877;
+      --accent-ink:#2c1600;
+      --accent-wash:rgba(240,151,63,0.16);
+      --red:#e08074;
+      --red-wash:rgba(224,128,116,0.14);
+      --green:#8fbf85;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,monospace;}
+  h1,h2,h3,h4{font-family:"Iowan Old Style","Palatino Linotype",Georgia,"Times New Roman",serif;font-weight:400;text-wrap:balance;color:var(--ink);}
+  em{font-style:italic;}
+  a{color:var(--accent-deep);}
+  :root[data-theme="dark"] a{color:var(--accent);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) a{color:var(--accent);}}
+
+  .mark{position:relative;white-space:nowrap;}
+  .mark::before{
+    content:"";position:absolute;left:-0.1em;right:-0.1em;top:0.16em;bottom:0.05em;
+    background:var(--accent-wash);transform:rotate(-0.5deg);z-index:-1;
+    border-radius:2px 6px 3px 5px/4px 2px 5px 3px;
+  }
+
+  .masthead{background:var(--ink);color:var(--paper);padding:60px 32px 44px;}
+  :root[data-theme="dark"] .masthead{background:#0c0b07;}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .masthead{background:#0c0b07;}}
+  .masthead-inner{max-width:800px;margin:0 auto;}
+  .eyebrow{font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;}
+  .masthead h1{font-size:clamp(34px,5.6vw,52px);line-height:1.05;letter-spacing:-0.01em;color:var(--paper);margin:0 0 18px;}
+  .masthead h1 em{color:var(--accent);font-style:italic;}
+  .masthead p.lede{font-size:16.5px;color:#cfc7b3;max-width:60ch;margin:0 0 26px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:11.5px;color:#a89c7e;letter-spacing:0.02em;border-top:1px solid #35301f;padding-top:16px;}
+  .meta-row b{color:var(--accent);font-weight:500;}
+
+  main{max-width:800px;margin:0 auto;padding:52px 32px 40px;}
+  section{margin-bottom:58px;}
+  section:last-of-type{margin-bottom:36px;}
+  .section-label{font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:12px;}
+  h2{font-size:27px;margin:0 0 16px;}
+  h3{font-size:18px;margin:26px 0 10px;font-style:italic;}
+  p{margin:0 0 15px;max-width:70ch;}
+  .lead-para{font-size:17.5px;line-height:1.75;}
+  ul,ol{margin:0 0 15px;padding-left:22px;max-width:66ch;}
+  li{margin-bottom:6px;}
+  strong{font-weight:600;}
+
+  .quote{border-left:2px solid var(--accent);padding:2px 0 2px 20px;margin:20px 0;font-family:"Iowan Old Style",Georgia,serif;font-style:italic;font-size:16.5px;color:var(--ink);}
+
+  .callout{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px;background:var(--surface);padding:16px 18px;margin:20px 0;}
+  .callout p{margin:0;font-size:14.5px;}
+  .callout .callout-label{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:6px;}
+
+  .warn{border:1px solid var(--red);border-left:3px solid var(--red);border-radius:4px;background:var(--red-wash);padding:16px 18px;margin:20px 0;}
+  .warn .warn-label{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:6px;font-weight:600;}
+  .warn p{margin:0 0 8px;font-size:14.5px;}
+  .warn p:last-child{margin-bottom:0;}
+
+  .trinity{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 8px;}
+  .trinity-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 16px;}
+  .trinity-card .tag{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--accent-deep);text-transform:uppercase;}
+  .trinity-card h4{font-family:"Iowan Old Style",Georgia,serif;font-style:italic;font-weight:400;font-size:19px;margin:6px 0 8px;}
+  .trinity-card p{font-size:13.5px;color:var(--muted);margin:0;}
+
+  .timeline{position:relative;margin:22px 0;padding-left:26px;border-left:1px solid var(--line);}
+  .tl-entry{position:relative;padding-bottom:28px;}
+  .tl-entry:last-child{padding-bottom:0;}
+  .tl-entry::before{content:"";position:absolute;left:-30px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--paper);border:2px solid var(--accent);}
+  .tl-date{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--accent-deep);letter-spacing:0.04em;margin-bottom:4px;}
+  .tl-entry h4{font-family:"Iowan Old Style",Georgia,serif;font-size:16.5px;font-weight:400;margin:0 0 5px;}
+  .tl-entry p{font-size:14.5px;margin-bottom:0;color:var(--ink);}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .compare-col{background:var(--paper);padding:18px 20px;}
+  .compare-col h4{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);font-style:normal;margin:0 0 10px;}
+  .compare-col p{font-size:13.5px;margin-bottom:8px;}
+  .compare-col .src{font-size:11px;color:var(--muted);font-family:ui-monospace,monospace;}
+
+  .status-board{border-top:1px solid var(--line);margin:18px 0;}
+  .status-row{display:grid;grid-template-columns:170px 1fr 92px;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);align-items:baseline;}
+  .status-row .name{font-weight:600;font-size:13.5px;}
+  .status-row .desc{font-size:13px;color:var(--muted);}
+  .status-tag{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:3px 7px;border-radius:3px;text-align:center;white-space:nowrap;justify-self:end;height:fit-content;}
+  .status-tag.live{background:var(--accent-wash);color:var(--accent-ink);}
+  :root[data-theme="dark"] .status-tag.live{color:var(--accent);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .status-tag.live{color:var(--accent);}}
+  .status-tag.stub{background:var(--surface-2);border:1px solid var(--line);color:var(--muted);}
+  .status-tag.build{background:var(--surface-2);border:1px solid var(--accent);color:var(--accent-deep);}
+
+  .stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:18px 0;}
+  .stack-item{background:var(--paper);padding:13px 16px;}
+  .stack-item dt{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin:0 0 4px;}
+  .stack-item dd{margin:0;font-size:13.5px;}
+
+  .chip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:18px 0;}
+  .chip{border:1px solid var(--line);border-radius:4px;padding:14px 15px;background:var(--surface);}
+  .chip .chip-name{font-family:"Iowan Old Style",Georgia,serif;font-style:italic;font-size:15px;margin-bottom:5px;}
+  .chip .chip-desc{font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+  .fyp-list{display:flex;flex-direction:column;gap:9px;margin:16px 0;}
+  .fyp-item{display:flex;justify-content:space-between;gap:16px;padding:11px 14px;background:var(--surface);border-radius:4px;border:1px solid var(--line);font-size:13px;}
+  .fyp-item .proj{font-weight:600;}
+  .fyp-item .who{color:var(--muted);text-align:right;}
+
+  .threads{display:flex;flex-direction:column;gap:14px;}
+  .thread{padding:15px 18px;border:1px dashed var(--line);border-radius:4px;}
+  .thread .t-label{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:6px;}
+  .thread p{font-size:13.5px;margin:0;color:var(--ink);}
+
+  .filetree{font-family:ui-monospace,monospace;font-size:12.5px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:16px 18px;overflow-x:auto;margin:18px 0;line-height:1.9;white-space:pre;}
+  .filetree .d{color:var(--accent-deep);}
+  .filetree .c{color:var(--muted);}
+
+  footer{max-width:800px;margin:0 auto;padding:26px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:ui-monospace,monospace;font-size:11px;color:var(--muted);letter-spacing:0.02em;}
+
+  @media (max-width:640px){
+    .masthead{padding:40px 20px 30px;}
+    main{padding:36px 20px 20px;}
+    footer{padding:22px 20px 44px;flex-direction:column;}
+    .trinity{grid-template-columns:1fr;}
+    .compare{grid-template-columns:1fr;}
+    .stack-grid{grid-template-columns:1fr;}
+    .status-row{grid-template-columns:1fr;gap:4px;}
+    .status-tag{justify-self:start;}
+    .fyp-item{flex-direction:column;gap:2px;}
+    .fyp-item .who{text-align:left;}
+  }
+</style>
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="eyebrow"><span class="dot"></span>Project understanding — compiled for Shayaan</div>
+    <h1>Reading <em>Highlighter</em> end to end</h1>
+    <p class="lede">A full pass across everything under <span class="mono">Business/Highlighter/</span> — the vision docs, the ethics detour, the working Instagram pipeline, the two codebases in progress, and this landing-page repo — pulled into one picture.</p>
+    <div class="meta-row">
+      <span>Sources: <b>docs/</b>, <b>website/project</b>, <b>website/v1_landing</b>, <b>playground/</b></span>
+      <span>Coverage: <b>May 2025 → Jun 2026</b></span>
+      <span>Compiled <b>7 Jul 2026</b></span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <section>
+    <div class="section-label">Executive summary</div>
+    <p class="lead-para">Highlighter is a personal media project founded by Shayaan Danish that grew out of a student Instagram page — <span class="mono">@fasttimeskhi</span>, now <span class="mono">@highlighter.world</span> — into a proposed identity platform: a person represented by <span class="mark">what they think</span> and <span class="mark">what they build</span>, rather than a resume or a feed. Fourteen months of docs hold the principles steady (no user monetisation, ever; people only, never brands; slow accumulation over growth-hacking) while the scope has narrowed hard, from a launchpad for a half-dozen "paradigm-shifting" products down to one disciplined three-pillar tool. What's actually running today is smaller than any vision doc: a working Instagram carousel generator for final-year-project showcases, an early-stage Next.js app that is mostly scaffolding, and this landing-page repo, which is still empty.</p>
+  </section>
+
+  <section>
+    <div class="section-label">The thesis, as it stands today</div>
+    <h2>The Trinity</h2>
+    <p>The clearest statement of what Highlighter is <em>for</em> comes from the April 2026 overview doc: "Highlighter says you are the sum of what you think (stories) + what you build (projects). Together with your profile, these form a complete and coherent portrait of a person. Not a resume. Not a feed. A portrait." Three pillars, treated as one identity rather than three separate features:</p>
+    <div class="trinity">
+      <div class="trinity-card"><span class="tag">thinking</span><h4>Stories</h4><p>How you think — long-form writing, essays, tutorials. Rich text via Tiptap, categories, tags, cover image, per-story color theming, nested comments.</p></div>
+      <div class="trinity-card"><span class="tag">doing</span><h4>Projects</h4><p>What you build — showcases with a short description, external links, cover image, and a photo gallery. The next thing scheduled to actually get built.</p></div>
+      <div class="trinity-card"><span class="tag">being</span><h4>Profile</h4><p>Who you are — bio, social links, geography, affiliations. Ties the other two together into one portrait, not a résumé.</p></div>
+    </div>
+    <p>The URL model exists to enforce this: every piece of content lives at <span class="mono">/{username}/{slug}</span>, never <span class="mono">/stories/{slug}</span> — the person is always the primary context, the content types are discovery lenses onto that person, not owners of it. Two more principles recur everywhere: <strong>alignment over engagement</strong> (not optimised for time-on-site or virality), and a flat refusal of user monetisation — "the moment it enters the room, every decision changes." Moderation follows from the same instinct: posts go live immediately and a report queue handles the rest, rather than pre-publish approval — a deliberate safe-harbor stance, not an oversight.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Where it came from</div>
+    <h2>Origin, phase by phase</h2>
+    <p>Highlighter didn't start as a platform idea — it started as a succession problem. <span class="mono">FAST Times Karachi</span> was a real, functioning student media project (two magazine issues, live procom interviews with industry reps, 2023–24, at FAST-NUCES). As the founding team graduated, "what happens to the Instagram page" turned into a much bigger question about what a coherent system for creators and collaborators could look like.</p>
+    <div class="timeline">
+      <div class="tl-entry"><div class="tl-date mono">24 May 2025</div><h4>First log entry</h4><p>Two days of conversation after an exam crystallise into a plan to build "the media organisation as the base for launching other paradigm-shifting tools," modelled on Wikipedia / Linux / Bitcoin: community-built, not capital-built.</p></div>
+      <div class="tl-entry"><div class="tl-date mono">2025, undated</div><h4>The ethics detour</h4><p>An extended self-dialogue works through whether wanting authorship credit is ego or ethics, then whether an identity platform could calcify into an ideology or inspire harmful extremism. Concludes that phases exist specifically to prevent "phase infinity" — and pauses build work to close out nearer-term obligations first.</p></div>
+      <div class="tl-entry"><div class="tl-date mono">1 Apr 2026</div><h4>"Current Vision" — the Trinity settles</h4><p>The fullest, most disciplined version of the product: Stories / Projects / Profile, historical-figure profiles for cold-start and SEO, a DSL for power-user search, sustainability via institutional backing instead of ads or VC.</p></div>
+      <div class="tl-entry"><div class="tl-date mono">2 Apr 2026</div><h4>"Strategy &amp; Execution Summary" — a leaner, tactical pass</h4><p>Repositions Highlighter as a Cloudflare-native "insight-capture tool," with a 3-week launch sprint, a donation/sponsorship revenue model, and a named future product, <strong>Eon</strong>, for decision and career clarity.</p></div>
+      <div class="tl-entry"><div class="tl-date mono">4 Sep 2026</div><h4>Schema design — opened, not filled</h4><p>A spreadsheet titled "schema design highlighter" is created with a single placeholder cell. Data-model work hadn't actually started, and — per the current codebase — still hasn't.</p></div>
+      <div class="tl-entry"><div class="tl-date mono">8 Jun 2026</div><h4>Logo finalised; a parallel content thread</h4><p>Orange wordmark variants locked in (the assets now sitting in <span class="mono">playground/</span>). Same day, a separate thread sketches <strong>#MyAIWorkflow</strong>, a crowdsourced AI-workflow campaign feeding a "commons" directory, and later an <strong>#AIEthicalAlignmentMovement</strong>.</p></div>
+      <div class="tl-entry"><div class="tl-date mono">18–29 Jun 2026</div><h4>Forms Project — the first thing that actually ships</h4><p>FYP (final-year-project) submissions start arriving through a Google Form and get turned into real Instagram carousels via a purpose-built local studio app — the most concrete, working artifact in the whole project.</p></div>
+      <div class="tl-entry"><div class="tl-date mono">7 Jul 2026</div><h4>Today — landing page work begins</h4><p><span class="mono">v1_landing</span> (this repo) is initialised: one commit, "exploring how to present a clean landing page," no content yet.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">A tension worth naming</div>
+    <h2>Two visions, written a day apart</h2>
+    <p>The two "Current Vision" documents were written on consecutive days and don't fully agree with each other:</p>
+    <div class="compare">
+      <div class="compare-col"><h4>highlighter-overview.md</h4><p><strong>"A tool for people… not a social network, not a content platform, not a portfolio site."</strong> Positions Highlighter as an identity portrait — Stories + Projects + Profile. Sustained by industry and education-sector backing. Viable at 15–30 people, "built to still make sense in 15 years."</p><p class="src">1-4-2026 (Current Vision)</p></div>
+      <div class="compare-col"><h4>Strategy &amp; Execution Summary.md</h4><p><strong>"A lightweight, insight-capture tool that helps users save highlights, connect ideas, and think with clarity."</strong> Closer to a notes / PKM app. Sustained by donations, sponsorships, a capped "stewardship salary." Ships on a 3-week sprint.</p><p class="src">1-4-2026 (Current Vision)</p></div>
+    </div>
+    <p>Both keep the "no user monetisation" line and the founder-as-builder framing — but one is a portrait platform for other people's work, the other is closer to a personal thinking tool. The <span class="mono">website/project</span> codebase's own <span class="mono">CLAUDE.md</span> has effectively resolved this in practice: it implements the Trinity / portrait version (Stories, Projects, People, person-first URLs), not the insight-capture one. Whoever writes the landing page copy will need to pick a lane too — the code has already picked one.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Reading the self-dialogue</div>
+    <h2>Ethics as a design constraint, not an afterthought</h2>
+    <p>One archived conversation stands apart: an extended reflection on the responsibility of building something that shapes how people see their own identity.</p>
+    <p class="quote">"Underneath everything, the conversation is about responsibility: how to create something meaningful without becoming destructive… Highlighter becomes a case study for how ideas, identity, education, and power interact."</p>
+    <p>Concretely, this produced two commitments visible later in the docs: the phase plan is treated as "a governance and safety mechanism, not just a roadmap," explicitly meant to stop the project running to "phase infinity"; and a requirement for "structural humility" — feedback loops that keep a self-expression tool from calcifying into an ideology. It's also the source of the pause-and-return decision: finish nearer-term obligations (an assignment, a GitHub repo, FYP reports) before resuming Highlighter, on the reasoning that clearer thinking there improves leadership everywhere else.</p>
+  </section>
+
+  <section>
+    <div class="section-label">What actually exists — part one</div>
+    <h2>The Forms Project: the thing that's really shipping</h2>
+    <p>The most concrete artifact in the whole project isn't a doc — it's a small working app: a client-side studio (Vite, MIT-licensed) that turns FYP Submission Form responses into editable 1080×1080 Instagram carousel decks, exported via <span class="mono">html2canvas</span>. No server, no accounts, nothing leaves the browser. It's the literal implementation of "Keep FAST Times as forefront" from the original phase plan.</p>
+    <p>Four real student projects have gone through the pipeline so far:</p>
+    <div class="fyp-list">
+      <div class="fyp-item"><span class="proj">Stu — Personal Food Concierge</span><span class="who">Shayaan Danish, Abdul Tawab, Umair — the founder's own FYP</span></div>
+      <div class="fyp-item"><span class="proj">Offlink — Offline P2P Payments</span><span class="who">Muhammad Anas Khan's team, FAST-NUCES</span></div>
+      <div class="fyp-item"><span class="proj">Sairaab — Urban Plantation Platform</span><span class="who">Shariq Nadeem's team</span></div>
+      <div class="fyp-item"><span class="proj">AI-Powered Virtual Interview System</span><span class="who">Noman Ahmed Siddiqui's team</span></div>
+    </div>
+    <p>Recruitment copy sent from <span class="mono">editor@highlighter.world</span> is candid about scope and trust: <em>"Highlighter is a totally free platform. Please disregard and report any incidents of anyone asking for a monetary exchange."</em></p>
+  </section>
+
+  <section>
+    <div class="section-label">What actually exists — part two</div>
+    <h2>The main app: <span class="mono">website/project</span></h2>
+    <p>Tech stack, per its own <span class="mono">package.json</span> and <span class="mono">CLAUDE.md</span>: Next.js 15.5 (App Router), React 18.3, TypeScript, Tailwind CSS 3, shadcn/ui on Radix primitives, and Tiptap 2.6 for the rich-text story editor. There's a deliberate house rule against single-maintainer npm packages — <span class="mono">cn()</span> / <span class="mono">cva()</span> are hand-rolled in <span class="mono">src/lib/utils.ts</span>, icons are inlined SVG in <span class="mono">src/lib/icons.tsx</span> rather than pulled from lucide-react. It began life as a Firebase Studio starter (Firebase/Genkit/Gemini have since been fully ripped out — a stray README line is the only trace left).</p>
+    <div class="stack-grid">
+      <div class="stack-item"><dt>Hosting</dt><dd>Cloudflare Pages</dd></div>
+      <div class="stack-item"><dt>Database</dt><dd>Cloudflare D1 (SQLite) via Drizzle ORM — binding <span class="mono">DB</span>, db name <span class="mono">highlighter-db</span></dd></div>
+      <div class="stack-item"><dt>File storage</dt><dd>Cloudflare R2 — binding <span class="mono">MEDIA</span>, bucket <span class="mono">highlighter-media</span></dd></div>
+      <div class="stack-item"><dt>Auth</dt><dd>Google OAuth + custom JWT issued by Next.js API routes</dd></div>
+      <div class="stack-item"><dt>Brand</dt><dd>Strictly three colors — black <span class="mono">#000000</span> primary, white primary-foreground, orange <span class="mono">#FFA500</span> accent</dd></div>
+      <div class="stack-item"><dt>Editor autosave</dt><dd>localStorage every 5s, restore-on-load prompt — no backend involved yet</dd></div>
+    </div>
+    <div class="warn">
+      <div class="warn-label">The gap that matters most</div>
+      <p>Almost every backend file is a literal <span class="mono">// TODO</span> stub with an empty body. <span class="mono">drizzle/schema.ts</span> — meant to be the "single source of truth" per its own CLAUDE.md — defines <strong>zero tables</strong>. <span class="mono">src/lib/db.ts</span>, <span class="mono">auth.ts</span>, <span class="mono">middleware.ts</span>, every <span class="mono">*.service.ts</span> (story, project, profile, comment, search, upload), and every <span class="mono">src/app/api/**/route.ts</span> handler are all empty stubs. <span class="mono">StoryEditor.tsx</span> — the centerpiece Tiptap editor — currently renders <span class="mono">&lt;div&gt;Editor coming soon.&lt;/div&gt;</span>. The data model exists only as plain TypeScript types (<span class="mono">User</span>, <span class="mono">Story</span>, <span class="mono">Project</span>, <span class="mono">Comment</span>, <span class="mono">Submission</span> in <span class="mono">src/models/index.ts</span>), not yet backed by a real schema.</p>
+    </div>
+    <p>What <em>is</em> real: the full page/route skeleton (route groups <span class="mono">(auth)</span> and <span class="mono">(main)</span>, the dynamic <span class="mono">[username]/[slug]</span> content route, admin / donate / transparency pages), the complete shadcn/ui component library, and a fully-built <span class="mono">Navbar.tsx</span> (black sticky header, settings / battery / paperclip icons left, Home / Stories / Projects / People nav plus an orange Account button right, active-state styling). The homepage itself is still a bare hero placeholder. Recent commit history — a cleanup pass, a navbar/footer refactor, a stub restructuring around the username-first URL model, then a run of unlabeled "auto: claude session checkpoint" commits — reads as iterative, Claude-assisted scaffolding, with <strong>Projects</strong> next in line to actually get built (DB → API → UI), then Stories, then Auth.</p>
+  </section>
+
+  <section>
+    <div class="section-label">What actually exists — part three</div>
+    <h2>This repo, and the playground</h2>
+    <p><span class="mono">website/v1_landing</span> — this repository — is a fresh scaffold: one commit ("exploring how to present a clean landing page"), a <span class="mono">.gitignore</span>, and a completely empty <span class="mono">README.md</span>. No framework, no package.json, no copy or design drafted yet. Its remote points at <span class="mono">github.com/shayaandanishansari/highlighter</span>.</p>
+    <p><span class="mono">playground/</span> is a scratch folder, not a structured app. Its most useful signal: <span class="mono">playground/resend/send_email.js</span>, a minimal script confirming transactional email works via the Resend API, sending from <span class="mono">noreply@highlighter.world</span> — meaning the <span class="mono">highlighter.world</span> domain is live and email-capable. The folder also holds the current brand assets — <span class="mono">logo.svg</span>, <span class="mono">logo-dark.svg</span>, <span class="mono">logo-icon.svg</span> — a stylized marker mark in orange (<span class="mono">#FFA500</span>) and black/dark-grey, in light and dark variants plus an icon-only mark.</p>
+    <div class="warn">
+      <div class="warn-label">Security note — worth acting on, not just noting</div>
+      <p><span class="mono">playground/text.txt</span> currently holds plaintext, live-looking credentials in the clear: a Gmail app password and a full Google OAuth2 client JSON blob (client ID/secret, project ID <span class="mono">highlighter-492318</span>, redirect URIs for both <span class="mono">localhost:3000</span> and <span class="mono">highlighter.world</span>). <span class="mono">playground/.env</span> similarly holds a live <span class="mono">RESEND_API_KEY</span>, Google client ID/secret, and a JWT signing secret. <span class="mono">playground/.gitignore</span> excludes both from that folder's own git tracking, which helps only if playground is its own repo and nothing else backs the folder up unencrypted.</p>
+      <p>Worth confirming directly: that neither file has ever been committed anywhere, and that they're excluded from any sync/backup that isn't fully private. Rotating the Gmail app password and Google OAuth secret is cheap insurance if there's any doubt.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Build status, side by side</div>
+    <h2>Vision vs. code vs. this repo</h2>
+    <div class="status-board">
+      <div class="status-row"><div class="name">docs/ vision</div><div class="desc">Trinity thesis fully specified in prose; sustainability model has three different, untested versions; data model never actually drafted (the schema spreadsheet has one placeholder cell).</div><div class="status-tag stub">prose only</div></div>
+      <div class="status-row"><div class="name">website/project</div><div class="desc">Next.js 15 + Drizzle/D1 + R2 + Google OAuth. Routes, UI kit, and navbar built; every backend file and the DB schema itself are empty TODO stubs. Projects is the next vertical queued to actually get built.</div><div class="status-tag build">in progress</div></div>
+      <div class="status-row"><div class="name">website/v1_landing</div><div class="desc">This repository. One init commit, empty README, no source, no copy or design drafted.</div><div class="status-tag stub">just started</div></div>
+      <div class="status-row"><div class="name">instagram_workflow_automater</div><div class="desc">Fully functional, in active use, producing and posting real carousel content from real FYP submissions.</div><div class="status-tag live">working</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Beyond the Trinity</div>
+    <h2>The wider constellation</h2>
+    <p>Highlighter is consistently described as one tool among several related ones the founder is deliberately keeping separate — to merge only "if they naturally converge through long-term use":</p>
+    <div class="chip-grid">
+      <div class="chip"><div class="chip-name">EoN / Eon</div><div class="chip-desc">A private counterpart to Highlighter — messy thinking and rehearsal before public articulation, without reputational risk. Also framed elsewhere as a decision/career-clarity tool.</div></div>
+      <div class="chip"><div class="chip-name">Mirror / Shattered Glass</div><div class="chip-desc">A private AI tool reflecting your own language patterns back to you over time — themes, drift, blind spots. Explicitly not diagnostic.</div></div>
+      <div class="chip"><div class="chip-name">Debate mind-shift tool</div><div class="chip-desc">Pre/post belief polling for debates — rewards updating your mind over "winning" the argument.</div></div>
+      <div class="chip"><div class="chip-name">Truth Perspective</div><div class="chip-desc">Compares lenses and assumptions rather than conclusions — makes disagreement legible instead of adversarial.</div></div>
+      <div class="chip"><div class="chip-name">Belief investing</div><div class="chip-desc">A non-monetary "conviction capital" system to back creators — a costlier, written signal replacing likes.</div></div>
+      <div class="chip"><div class="chip-name">AI Buddy layer</div><div class="chip-desc">Opt-in reflective companion UI — user-owned self-surveillance instead of platform surveillance. One-click off switch.</div></div>
+      <div class="chip"><div class="chip-name">DSL search</div><div class="chip-desc">A QuoteScript-inspired query language over Stories / Projects / People — recurs in nearly every doc as the planned power-user layer.</div></div>
+      <div class="chip"><div class="chip-name">The Arc</div><div class="chip-desc">An unrelated, same-voice side project: an 8-segment podcast format where a business guest's own answers reveal whether their stated mission matches how they operate.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Reading between the lines</div>
+    <h2>Open threads</h2>
+    <div class="threads">
+      <div class="thread"><div class="t-label">Scope has been shrinking, on purpose</div><p>An early launchpad list — Journeys.com, Sirway, HistoryOfTheEntireWorld, a drone-media football league — and a ~25-idea backlog have quietly dropped out of every doc after April 2026. Only the Trinity and its immediate satellites survive into the live codebase. Reads as the phase-discipline from the ethics conversation actually working.</p></div>
+      <div class="thread"><div class="t-label">Framing hasn't fully converged</div><p>"Portrait of a person" and "insight-capture tool" imply different UIs and different homepages. The codebase has picked the portrait version; the Cloudflare/sprint/donation plan from the Strategy doc hasn't been reconciled with it. Landing-page copy will force this choice into the open.</p></div>
+      <div class="thread"><div class="t-label">Data model is the biggest engineering gap</div><p>Both the dedicated schema spreadsheet and <span class="mono">drizzle/schema.ts</span> are empty placeholders. Nothing has actually modelled Stories / Projects / Profiles as tables yet, despite the Trinity being the entire thesis.</p></div>
+      <div class="thread"><div class="t-label">Sustainability model is still aspirational</div><p>"No user monetisation, ever" is firm and repeated everywhere. What replaces it — institutional backing, donations, a capped stewardship salary — has three different versions across the docs and no evidence yet of a real sponsor or institution.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Reference</div>
+    <h2>Folder map</h2>
+    <div class="filetree">Business/Highlighter/
+├── <span class="d">docs/</span>                                   <span class="c"># vision, strategy, schema notes, archive</span>
+│   ├── <span class="d">1-4-2026 (Current Vision)/</span>            <span class="c"># overview.md + Strategy &amp; Execution Summary.md</span>
+│   ├── <span class="d">2026-05-14 (Launch)/</span>
+│   ├── <span class="d">2026-06-08 (Launching)/</span>               <span class="c"># logo, #MyAIWorkflow</span>
+│   ├── <span class="d">2026-06-29 Forms Project/</span>
+│   │   └── <span class="d">instagram_workflow_automater/</span>    <span class="c"># the one thing that's live</span>
+│   ├── <span class="d">9-4-2026 (Schema Design)/</span>             <span class="c"># one placeholder cell</span>
+│   └── <span class="d">archive/</span>                              <span class="c"># incl. the ethics self-dialogue</span>
+├── <span class="d">playground/</span>                             <span class="c"># resend test, logo assets, ⚠ plaintext secrets</span>
+└── <span class="d">website/</span>
+    ├── <span class="d">project/</span>                            <span class="c"># Next.js app — scaffolded, backend all TODO</span>
+    └── <span class="d">v1_landing/</span>                         <span class="c"># ← you are here — empty</span></div>
+  </section>
+
+</main>
+
+<footer>
+  <span>Compiled from docs/, website/project, website/v1_landing, playground/</span>
+  <span>internal memo, not for distribution</span>
+</footer>
