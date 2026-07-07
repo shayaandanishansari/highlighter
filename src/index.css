@@ -119,6 +119,11 @@ a:focus-visible, button:focus-visible{
   text-align:center;
   line-height:1.5;
 }
+.badge-label{
+  font-family:'Work Sans', sans-serif;
+  font-weight:500;
+  letter-spacing:0;
+}
 .badge .growing{
   display:inline-flex;
   align-items:center;

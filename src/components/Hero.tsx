@@ -11,10 +11,10 @@ export function Hero() {
         </h1>
         <div className="badge">
           <span>
-            <Mark color="pink">200+</Mark> Instagram
+            <Mark color="pink">200+</Mark> <span className="badge-label">Instagram</span>
           </span>
           <span>
-            <Mark color="blue">80+</Mark> LinkedIn
+            <Mark color="blue">80+</Mark> <span className="badge-label">LinkedIn</span>
           </span>
           <span className="growing">
             <span className="dot" aria-hidden="true" />
