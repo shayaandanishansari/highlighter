@@ -26,6 +26,32 @@ export function Showcase() {
             See the showcase
           </a>
         </div>
+        <div className="showcase-gallery">
+          <figure>
+            <a href="https://www.instagram.com/highlighter.world/p/DacY_ksjEGM/" target="_blank" rel="noopener">
+              <img src="/showcase/sairaab.jpg" alt="Sairaab — urban plantation platform, FYP showcase cover" />
+              <figcaption>
+                Sairaab — <Mark color="green">link</Mark>
+              </figcaption>
+            </a>
+          </figure>
+          <figure>
+            <a href="https://www.instagram.com/highlighter.world/p/DaQhwqdjGJy/" target="_blank" rel="noopener">
+              <img src="/showcase/stu.jpg" alt="Stu — personal food concierge, FYP showcase cover" />
+              <figcaption>
+                Stu — <Mark color="yellow">link</Mark>
+              </figcaption>
+            </a>
+          </figure>
+          <figure>
+            <a href="https://www.instagram.com/highlighter.world/p/DaUlCgUDBwk/" target="_blank" rel="noopener">
+              <img src="/showcase/offlink.jpg" alt="Offlink — offline P2P payments, FYP showcase cover" />
+              <figcaption>
+                Offlink — <Mark color="blue">link</Mark>
+              </figcaption>
+            </a>
+          </figure>
+        </div>
       </div>
     </section>
   )

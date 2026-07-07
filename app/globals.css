@@ -253,6 +253,41 @@ section > p:last-child{ margin-bottom:0; }
 }
 .note .cta-row{ margin-top:1.2rem; }
 
+.showcase-gallery{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:.6rem;
+  margin:1rem 0 1.2rem;
+}
+.showcase-gallery figure{
+  margin:0;
+}
+.showcase-gallery a{
+  text-decoration:none;
+}
+.showcase-gallery img{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid var(--card-border);
+  display:block;
+  transition:opacity .15s ease;
+}
+.showcase-gallery a:hover img{ opacity:.85; }
+.showcase-gallery figcaption{
+  margin-top:.5rem;
+  text-align:center;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--ink);
+}
+@media (max-width:640px){
+  .showcase-gallery{ grid-template-columns:1fr; }
+  .showcase-gallery img{ aspect-ratio:16/10; }
+}
+
 /* ---- footer ---- */
 footer{
   border-top:1px dashed var(--card-border);
