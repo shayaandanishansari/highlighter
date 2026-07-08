@@ -2,10 +2,10 @@ import { Mark } from './Mark'
 
 export function Showcase() {
   return (
-    <section>
-      <p className="eyebrow">Right now</p>
+    <section aria-labelledby="showcase-eyebrow">
+      <p className="eyebrow" id="showcase-eyebrow">Right now</p>
       <div className="note">
-        <h3>FYP Showcase</h3>
+        <h2>FYP Showcase</h2>
         <p>
           Our first project. We turn final year projects into a{' '}
           <Mark color="yellow">clean, shareable write-up</Mark>: what you built, why you built it,

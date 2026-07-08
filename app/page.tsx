@@ -10,11 +10,13 @@ export default function Home() {
   return (
     <div className="page">
       <MarkReveal />
-      <Hero />
-      <Showcase />
-      <IdeaSection />
-      <WhereThisLives />
-      <Founder />
+      <main id="main-content">
+        <Hero />
+        <Showcase />
+        <IdeaSection />
+        <WhereThisLives />
+        <Founder />
+      </main>
       <Footer />
     </div>
   )

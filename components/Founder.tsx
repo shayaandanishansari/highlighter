@@ -2,8 +2,8 @@ import { Mark } from './Mark'
 
 export function Founder() {
   return (
-    <section>
-      <p className="eyebrow">Who's behind this</p>
+    <section aria-labelledby="founder-eyebrow">
+      <p className="eyebrow" id="founder-eyebrow">Who's behind this</p>
       <p>
         Hi, I'm{' '}
         <a

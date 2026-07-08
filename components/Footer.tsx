@@ -47,6 +47,9 @@ export function Footer() {
           <CopyIcon />
         </button>
         {copied && <span className="copied-badge">Copied!</span>}
+        <span className="sr-only" role="status">
+          {copied ? 'Copied to clipboard' : ''}
+        </span>
       </div>
     </footer>
   )

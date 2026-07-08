@@ -2,8 +2,8 @@ import { Mark } from './Mark'
 
 export function IdeaSection() {
   return (
-    <section>
-      <p className="eyebrow">The idea</p>
+    <section aria-labelledby="idea-eyebrow">
+      <p className="eyebrow" id="idea-eyebrow">The idea</p>
       <div className="idea-intro">
         <h2>
           Good ideas get <Mark color="pink">slept on</Mark>.
