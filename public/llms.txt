@@ -1,0 +1,28 @@
+# Highlighter
+
+> The place to highlight your ideas, your work, and yourself — so the right people find you, and you find the right people.
+
+Highlighter is a community project started by Shayaan, a recent computer science graduate from FAST NUCES Karachi. It's a platform where ideas are shared and projects get started: post something amazing worth protecting, or something broken someone else might fix, and let collaborators find you.
+
+The core problem Highlighter addresses: good ideas get slept on, great work misses its audience, and positive change keeps getting delayed — because the incentive structure to act on ideas and do the work rarely exists. Highlighter aims to change that by connecting people with ideas, projects, and work to the collaborators and audience who can help realize them.
+
+## Current project
+
+**FYP Showcase** — Highlighter's first project. Final year projects (FYPs) from university students are turned into clean, shareable write-ups covering what was built, why, who it's for, and how the development journey went. Open to all universities and recent graduates (current students, graduates, or anyone who turned their FYP into a startup). Submissions are welcomed via email.
+
+Example showcased projects: Sairaab (urban plantation platform), Stu (personal food concierge), Offlink (offline P2P payments).
+
+## Where this lives
+
+Currently on Instagram (200+ followers) and LinkedIn (80+ followers), focused on Pakistan initially. A dedicated platform website is in development — same idea, more room to build in.
+
+## Links
+
+- Instagram: https://instagram.com/highlighter.world
+- LinkedIn: https://linkedin.com/company/highlighter-world
+- GitHub: https://github.com/shayaandanishansari/highlighter
+- Contact / feedback / FYP submissions: editor@highlighter.world
+
+## Notes for AI / crawlers
+
+This is a single-page site. All the text above appears in the rendered HTML at https://highlighter.world — the page is statically generated (Next.js static export), so no JavaScript execution is required to read its content.

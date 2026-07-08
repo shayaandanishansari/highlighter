@@ -31,6 +31,25 @@ export const metadata: Metadata = {
   },
 }
 
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Highlighter',
+  url: SITE_URL,
+  description: DESCRIPTION,
+  founder: {
+    '@type': 'Person',
+    name: 'Shayaan',
+    sameAs: ['https://www.linkedin.com/in/shayaan-danish-ansari-43a852246/'],
+  },
+  sameAs: [
+    'https://instagram.com/highlighter.world',
+    'https://linkedin.com/company/highlighter-world',
+    'https://github.com/shayaandanishansari/highlighter',
+  ],
+  email: 'editor@highlighter.world',
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -40,6 +59,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link
           href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Caveat:wght@600&family=IBM+Plex+Mono:wght@500;600&family=Work+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
         />
       </head>
       <body>{children}</body>
